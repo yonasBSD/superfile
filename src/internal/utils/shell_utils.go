@@ -30,6 +30,7 @@ func ExecuteCommand(timeLimit time.Duration, cmdDir string, baseCmd string, args
 
 	cmd := exec.CommandContext(ctx, baseCmd, args...)
 	cmd.Dir = cmdDir
+	DetachFromTerminal(cmd)
 	outputBytes, err := cmd.CombinedOutput()
 	retCode := -1
 
