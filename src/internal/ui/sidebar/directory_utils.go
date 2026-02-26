@@ -7,10 +7,11 @@ import (
 
 	"github.com/adrg/xdg"
 
+	"github.com/yorukot/superfile/src/pkg/utils"
+
 	variable "github.com/yorukot/superfile/src/config"
 	"github.com/yorukot/superfile/src/config/icon"
 	"github.com/yorukot/superfile/src/internal/common"
-	"github.com/yorukot/superfile/src/internal/utils"
 )
 
 // Fuzzy search function for a list of directories.
