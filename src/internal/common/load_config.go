@@ -13,10 +13,10 @@ import (
 	"github.com/charmbracelet/x/ansi"
 	"github.com/pelletier/go-toml/v2"
 
-	"github.com/yorukot/superfile/src/config/icon"
-	"github.com/yorukot/superfile/src/internal/utils"
+	"github.com/yorukot/superfile/src/pkg/utils"
 
 	variable "github.com/yorukot/superfile/src/config"
+	"github.com/yorukot/superfile/src/config/icon"
 )
 
 // Load configurations from the configuration file. Compares the content
