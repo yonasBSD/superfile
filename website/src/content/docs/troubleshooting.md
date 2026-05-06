@@ -17,6 +17,6 @@ Try these things below:
 
 Try these things below:
 
-- Set your locale to utf-8  
-- chcp 65001 ( If that's an option for your shell )  
+- Set your locale to utf-8
+- chcp 65001 ( If that's an option for your shell )
 - Set environment variable RUNEWIDTH_EASTASIAN to 0 (`RUNEWIDTH_EASTASIAN=0`)

@@ -9,10 +9,11 @@
    <br>
    <br>
    <a href="https://www.warp.dev/?utm_source=github&utm_medium=referral&utm_campaign=superfile">
-      <img alt="Warp sponsorship" width="300" src="/asset/warp.png">
+      <img alt="Warp sponsorship" width="300" src="asset/readme/warp.png">
    </a>
 
 ### [Warp, the AI terminal for developers](https://www.warp.dev/?utm_source=github&utm_medium=referral&utm_campaign=superfile)
+
 [Available for macOS, Linux, & Windows](https://www.warp.dev/?utm_source=github&utm_medium=referral&utm_campaign=superfile)<br>
 
 </div>
@@ -21,49 +22,59 @@
 </div>
 
 <div align="center">
-
+<br>
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="/asset/superfilelogowhite.png" />
-  <source media="(prefers-color-scheme: light)" srcset="/asset/superfilelogoblack.png" />
-  <img alt="superfile LOGO" src="/asset/superfilelogowhite.png" />
+  <source width="300" media="(prefers-color-scheme: dark)" srcset="website/src/assets/superfile-night.svg" />
+  <source width="300" media="(prefers-color-scheme: light)" srcset="website/src/assets/superfile-day.svg" />
+  <img alt="superfile LOGO" src="website/src/assets/superfile-day.svg" />
 </picture>
+<br><br>
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/yorukot/superfile)](https://goreportcard.com/report/github.com/yorukot/superfile)
-[![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/yorukot/superfile/refs/heads/main/LICENSE)
-[![Discord Link](https://img.shields.io/discord/1338415256875307110?label=discord&logo=discord&logoColor=white)](https://discord.gg/YYtJ23Du7B)
-[![Release](https://img.shields.io/github/v/release/yorukot/superfile.svg?style=flat-square)](https://github.com/yorukot/superfile/releases/latest)
-![Homebrew downloads](https://img.shields.io/homebrew/installs/dy/superfile?label=Homebrew)
-![GitHub downloads](https://img.shields.io/github/downloads/yorukot/superfile/total?label=GitHub%20downloads%20assets%2Freleases)
-[![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/yorukot/superfile?utm_source=oss&utm_medium=github&utm_campaign=yorukot%2Fsuperfile&labelColor=171717&color=FF570A&&label=CodeRabbit+Reviews)](https://www.coderabbit.ai/)
+[![Go Report Card](https://goreportcard.com/badge/github.com/yorukot/superfile)](https://goreportcard.com/report/github.com/yorukot/superfile) [![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/yorukot/superfile/refs/heads/main/LICENSE) [![Discord Link](https://img.shields.io/discord/1338415256875307110?label=discord&logo=discord&logoColor=white)](https://discord.gg/YYtJ23Du7B) [![Release](https://img.shields.io/github/v/release/yorukot/superfile.svg?style=flat-square)](https://github.com/yorukot/superfile/releases/latest) ![Homebrew downloads](https://img.shields.io/homebrew/installs/dy/superfile?label=Homebrew) ![GitHub downloads](https://img.shields.io/github/downloads/yorukot/superfile/total?label=GitHub%20downloads%20assets%2Freleases) [![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/yorukot/superfile?utm_source=oss&utm_medium=github&utm_campaign=yorukot%2Fsuperfile&labelColor=171717&color=FF570A&&label=CodeRabbit+Reviews)](https://www.coderabbit.ai/)
 
-![](/asset/demo.png)
+![](website/src/assets/demo.png)
 
 </div>
 
 ## Demo
 
-| Perform common operations |
-| ------------------------- |
-| ![](/asset/demo.gif)      |
+| Perform common operations  |
+| -------------------------- |
+| ![](website/src/assets/demo.gif) |
 
 ## Content
 
+- [Demo](#demo)
+- [Content](#content)
 - [Installation](#installation)
+  - [macOS and Linux](#macos-and-linux)
+  - [Windows](#windows)
+    - [Powershell](#powershell)
+    - [Winget](#winget)
+    - [Scoop](#scoop)
+  - [More installation methods](#more-installation-methods)
 - [Build](#build)
+  - [For macOS/Linux](#for-macoslinux)
+  - [For Windows](#for-windows)
+- [Start superfile](#start-superfile)
 - [Supported Systems](#supported-systems)
 - [Tutorial](#tutorial)
 - [Plugins](#plugins)
 - [Themes](#themes)
 - [Hotkeys](#hotkeys)
 - [Notes](#notes)
-- [Contributing](#contributing)
 - [Troubleshooting](#troubleshooting)
+- [Uninstalling](#uninstalling)
+  - [macOS and Linux](#macos-and-linux-1)
+  - [Window](#window)
+- [Contributing](#contributing)
 - [Thanks](#thanks)
-  - [Support](#Support)
+  - [Support](#support)
   - [Core maintainer](#core-maintainer)
   - [Contributors](#contributors)
   - [Powered by](#powered-by)
   - [Star History](#star-history)
+- [༼ つ ◕\_◕ ༽つ Please share.](#-つ-_-つ-please-share)
 
 ## Installation
 
@@ -72,27 +83,33 @@
 ```bash
 bash -c "$(curl -sLo- https://superfile.dev/install.sh)"
 ```
+
 If you want to inspect the script, see : [install.sh](./website/public/install.sh)
 
 ### Windows
 
 #### Powershell
+
 ```powershell
 powershell -ExecutionPolicy Bypass -Command "Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://superfile.dev/install.ps1'))"
 ```
+
 If you want to inspect the script, see : [install.ps1](./website/public/install.ps1)
 
 #### [Winget](https://winget.run/)
+
 ```powershell
 winget install --id yorukot.superfile
 ```
 
 #### [Scoop](https://scoop.sh/)
+
 ```
 scoop install superfile
 ```
 
 ### More installation methods
+
 [Click me to check on how to install](https://superfile.dev/getting-started/installation/)
 
 ## Build
@@ -118,6 +135,7 @@ cd superfile
 ```
 
 ### For macOS/Linux
+
 Run the `build.sh` file:
 
 ```bash
@@ -136,7 +154,7 @@ sudo mv ./bin/spf /usr/local/bin
 go build -o bin/spf.exe
 ```
 
-Edit System Environment Variables and add superfile repo's `bin` directory to your PATH  
+Edit System Environment Variables and add superfile repo's `bin` directory to your PATH
 
 ## Start superfile
 
@@ -164,8 +182,7 @@ After you install superfile, you can go [here](https://superfile.dev/getting-sta
 
 ## Hotkeys
 
-> [!WARNING]
-> If you are vim/nvim user please change your default hotkeys config to vim version!
+> [!WARNING] If you are vim/nvim user please change your default hotkeys config to vim version!
 
 [**Click me to see the hotkey wiki**](https://superfile.dev/configure/custom-hotkeys/)
 
@@ -173,7 +190,7 @@ After you install superfile, you can go [here](https://superfile.dev/getting-sta
 
 We have an auto update functionality, that fetches superfile's latest released version from github (if last timestamp of last version check was less than 24 hours) and prints a prompt to user, if there is a newer version available.
 
-You can turn this off, by setting `auto_check_update` to false in superfile config. [**Click me to see the config wiki**](https://superfile.dev/configure/superfile-config/) 
+You can turn this off, by setting `auto_check_update` to false in superfile config. [**Click me to see the config wiki**](https://superfile.dev/configure/superfile-config/)
 
 ## Troubleshooting
 
@@ -196,7 +213,6 @@ rm ~/.local/bin/spf
 ```
 
 If you don't rember, just try removing both.
-
 
 ### Window
 
@@ -233,7 +249,7 @@ If you want to contribute please follow the [contribution guide](./CONTRIBUTING.
 **Thanks to all the contributors for making this project even greater!**
 
 <a href="https://github.com/yorukot/superfile/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=yorukot/superfile" />
+  <img src="https://gthanks.yorukot.me/image?target=yorukot%2Fsuperfile" />
 </a>
 
 ### Powered by
@@ -244,8 +260,7 @@ Thanks to JetBrains team for providing open-source licenses to support the maint
 
 ### Star History
 
-**THANKS FOR All OF YOUR STARS!**
-Your stars are my motivation to keep updating!
+**THANKS FOR All OF YOUR STARS!** Your stars are my motivation to keep updating!
 
 <a href="https://star-history.com/#yorukot/superfile&Timeline">
  <picture>
@@ -257,6 +272,6 @@ Your stars are my motivation to keep updating!
 
 <div align="center">
 
-## ༼ つ ◕_◕ ༽つ  Please share.
+## ༼ つ ◕_◕ ༽つ Please share.
 
 </div>

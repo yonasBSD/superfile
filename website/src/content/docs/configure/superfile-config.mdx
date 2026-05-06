@@ -15,7 +15,9 @@ $EDITOR config_path
 ```
 
 :::tip
+
 To see the path locations of your superfile files, use the command `spf pl`.
+
 :::
 
 ### Setting
@@ -105,10 +107,11 @@ Save, exit, and reload your profile.
 ```
 
 :::note
-You need to make sure powershell is allowed to execute script. If you get error like `running
-scripts is disabled on this system`. You need to allow it.
+
+You need to make sure powershell is allowed to execute script. If you get error like `running scripts is disabled on this system`. You need to allow it.
 
 Example command to enable - `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned`
+
 :::
 
 - ###### default_open_file_preview
@@ -197,14 +200,12 @@ Number of lines to scroll when using PgUp/PgDown keys.
 
 Count of extra columns in file panel in addition to file name.
 
-`0` => Extra columns feature is disabled
-`1` => Also show size column
-`2` => Also show modify date
-`3` => Also show permission column
+`0` => Extra columns feature is disabled `1` => Also show size column `2` => Also show modify date `3` => Also show permission column
 
 :::caution
-Even though the extra columns are enabled, they will be hidden if the size of the filepanel is small.
-Please either increase the size or adjust the file_panel_name_percent config if you don't see the columns.
+
+Even though the extra columns are enabled, they will be hidden if the size of the filepanel is small. Please either increase the size or adjust the file_panel_name_percent config if you don't see the columns.
+
 :::
 
 - ###### file_panel_name_percent
@@ -215,8 +216,7 @@ Percentage of file panel width allocated to file names (25-100). Higher values g
 
 - ###### code_previewer
 
-`''` => Use the builtin syntax highlighting for code files with _chroma_.
-`'bat'` => Use syntax highlighting provided by the [`bat`](https://github.com/sharkdp/bat) command line tool.
+`''` => Use the builtin syntax highlighting for code files with _chroma_. `'bat'` => Use syntax highlighting provided by the [`bat`](https://github.com/sharkdp/bat) command line tool.
 
 - ###### nerdfont
 
@@ -231,7 +231,9 @@ Percentage of file panel width allocated to file names (25-100). Higher values g
 `false` => Don't show checkbox icons in select mode.
 
 :::note
+
 This setting is ignored unless `nerdfont = true`. Both `nerdfont` and `show_select_icons` must be `true` for checkbox icons to appear.
+
 :::
 
 - ###### transparent_background
@@ -249,7 +251,9 @@ This setting is an integer.
 `X` => The width of the file preview window is 1/`X` of the terminal width (minus the sidebar width). It is calculated as: (terminal width - sidebar width) / `X`
 
 :::caution
+
 `X` must be from 2 to 10.
+
 :::
 
 - ###### enable_file_preview_border
@@ -267,7 +271,9 @@ This setting is an integer.
 `X` => The width of the sidebar(excluding borders).
 
 :::caution
+
 `X` must be from 5 to 20.
+
 :::
 
 - ###### sidebar_sections
@@ -283,7 +289,9 @@ Only sections included in this list will be displayed. You can remove sections o
 Here are a few suggested styles, of course you can change them to your own:
 
 :::caution
+
 Make sure to add strings exactly one character wide. Use ' ' for borderless
+
 :::
 
 ```toml
@@ -318,11 +326,12 @@ border_middle_right = "┤"
 
 - ###### open_with
 
-Allows users to map file extensions to commands used to open them.
-The file path will be appended as the last argument.
+Allows users to map file extensions to commands used to open them. The file path will be appended as the last argument.
 
 :::caution
+
 Must be at the very end of the file
+
 :::
 
 ```toml
