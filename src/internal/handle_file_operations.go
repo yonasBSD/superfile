@@ -269,8 +269,6 @@ func (m *model) getPasteItemCmd() tea.Cmd {
 		return nil
 	}
 
-	// TODO: Do it via m.getNewReqID()
-	// TODO: Have an IO Req Management, collecting info about pending IO Req too
 	reqID := m.nextIoReqCnt()
 	panelLocation := m.getFocusedFilePanel().Location
 
@@ -281,8 +279,7 @@ func (m *model) getPasteItemCmd() tea.Cmd {
 			return NewNotifyModalMsg(notify.New(true, "Invalid paste location", err.Error(), notify.NoAction),
 				reqID)
 		}
-		state := executePasteOperation(&m.processBarModel, panelLocation, copyItems, cut)
-		return NewPasteOperationMsg(state, reqID)
+		return m.executePasteOperation(&m.processBarModel, panelLocation, copyItems, cut, reqID)
 	}
 }
 
@@ -308,15 +305,60 @@ func validatePasteOperation(panelLocation string, copyItems []string, cut bool) 
 	return nil
 }
 
-// new func to check and return an error that will go in m.content
-// create a new error type
+func makePasteProcessor(process processbar.Process,
+	processBarModel *processbar.Model,
+	panelLocation string, cut bool,
+) processbar.FileListProcessor {
+	processorFunction := func(items []string) (processbar.Process, []string) {
+		notProcessed := make([]string, 0)
+		if len(items) == 0 {
+			markProcessDone(process, processBarModel)
+			return process, notProcessed
+		}
+		var err error
+		for i, filePath := range items {
+			errMessage := "cut item error"
+			if cut && !isExternalDiskPath(filePath) {
+				err = moveElement(filePath, filepath.Join(panelLocation, filepath.Base(filePath)))
+			} else {
+				// TODO : These error cases are hard to test. We have to somehow make the paste operations fail,
+				// which is time consuming and manual. We should test these with automated testcases
+				// UPD: use "chattr +i" for target catalog to fail past opeations
+				err = pasteDir(filePath, filepath.Join(panelLocation, filepath.Base(filePath)),
+					&process, cut, processBarModel)
+				if err != nil {
+					errMessage = "paste item error"
+				}
+			}
 
-// Paste all clipboard items
-func executePasteOperation(processBarModel *processbar.Model,
-	panelLocation string, copyItems []string, cut bool,
-) processbar.ProcessState {
-	slog.Debug("executePasteOperation", "items", copyItems, "cut", cut, "panel location", panelLocation)
+			process.CurrentFile = filepath.Base(filePath)
+			if err != nil {
+				process.State = processbar.Failed
+				slog.Error(errMessage, "error", err)
+				slog.Debug("model.pasteItem - paste failure", "error", err,
+					"current item", filePath, "errMessage", errMessage)
+				process.ErrorMsg = formatFileError(filePath, err)
+				notProcessed = items[i:]
+				break
+			}
+			processBarModel.TrySendingUpdateProcessMsg(process)
+		}
+		if process.State != processbar.Failed {
+			process.State = processbar.Successful
+			process.Done = process.Total
+			markProcessDone(process, processBarModel)
+		}
+		return process, notProcessed
+	}
+	return processorFunction
+}
 
+func (m *model) executePasteOperation(processBarModel *processbar.Model,
+	panelLocation string, items []string, cut bool, reqID int,
+) tea.Msg {
+	if len(items) == 0 {
+		return NewPasteOperationMsg(processbar.Cancelled, reqID)
+	}
 	var operation processbar.OperationType
 	if cut {
 		operation = processbar.OpCut
@@ -325,49 +367,17 @@ func executePasteOperation(processBarModel *processbar.Model,
 	}
 
 	p, err := processBarModel.SendAddProcessMsg(
-		filepath.Base(copyItems[0]),
+		filepath.Base(items[0]),
 		operation,
-		getTotalFilesCnt(copyItems), true)
+		getTotalFilesCnt(items), true)
 	if err != nil {
 		slog.Error("Cannot spawn a new process", "error", err)
-		return processbar.Failed
+		return NewPasteOperationMsg(processbar.Failed, reqID)
 	}
-
-	for _, filePath := range copyItems {
-		errMessage := "cut item error"
-		if cut && !isExternalDiskPath(filePath) {
-			err = moveElement(filePath, filepath.Join(panelLocation, filepath.Base(filePath)))
-		} else {
-			// TODO : These error cases are hard to test. We have to somehow make the paste operations fail,
-			// which is time consuming and manual. We should test these with automated testcases
-			err = pasteDir(filePath, filepath.Join(panelLocation, filepath.Base(filePath)), &p, cut, processBarModel)
-			if err != nil {
-				errMessage = "paste item error"
-			}
-		}
-
-		p.CurrentFile = filepath.Base(filePath)
-		if err != nil {
-			slog.Debug("model.pasteItem - paste failure", "error", err,
-				"current item", filePath, "errMessage", errMessage)
-			p.State = processbar.Failed
-			slog.Error(errMessage, "error", err)
-			break
-		}
-		processBarModel.TrySendingUpdateProcessMsg(p)
-	}
-
-	if p.State != processbar.Failed {
-		p.State = processbar.Successful
-		p.Done = p.Total
-	}
-	p.DoneTime = time.Now()
-	err = processBarModel.SendUpdateProcessMsg(p, true)
-	if err != nil {
-		slog.Error("Could not send final update for process Bar", "error", err)
-	}
-
-	return p.State
+	finalizer := func(state processbar.ProcessState, reqId int) tea.Msg { return NewPasteOperationMsg(state, reqId) }
+	processor := makePasteProcessor(p, processBarModel, panelLocation, cut)
+	msg := m.runFileProcessor(processor, finalizer, items, reqID)
+	return msg
 }
 
 func getTotalFilesCnt(copyItems []string) int {
